@@ -1,0 +1,27 @@
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Search from "./pages/Search";
+import NoMatch from "./pages/NoMatch";
+import Saved from "./pages/Saved";
+import Nav from "./components/Nav";
+
+function App() {
+  return (
+    <Router>
+      <div>
+        <Nav />
+        <Switch>
+          <Route exact path={process.env.PUBLIC_URL + "/"} component={Search} />
+          <Route
+            exact
+            path={process.env.PUBLIC_URL + "/saved"}
+            component={Saved}
+          />
+          <Route component={NoMatch} />
+        </Switch>
+      </div>
+    </Router>
+  );
+}
+
+export default App;
