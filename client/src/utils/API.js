@@ -20,7 +20,7 @@ export default {
   // Search the Google API
   searchGoogle: function (q) {
     return axios.get(
-      `https://www.googleapis.com/books/v1/volumes?q=${q}&maxResults=20&key=${process.env.REACT_APP_API}`
+      `https://www.googleapis.com/books/v1/volumes?q=${q}&maxResults=20`
     );
   },
 };
