@@ -6,7 +6,7 @@ This application is a simple, React-based book search. The application calls the
 
 ## Usage
 
-Google Books Search is live [here](https://nabeek.github.io/employee-directory/).
+Google Books Search is live [here](https://nabeek-google-books.herokuapp.com/).
 
 ## Screenshot
 
