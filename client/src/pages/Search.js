@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Jumbotron from "../components/Jumbotron";
 import SearchResults from "../components/SearchResults";
 import API from "../utils/API";
-import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
-import { List, ListItem } from "../components/List";
-import { Input, TextArea, FormBtn } from "../components/Form";
+import { Input, FormBtn } from "../components/Form";
 
 function Books() {
   // Setting initial state
@@ -24,16 +22,29 @@ function Books() {
 
     API.searchGoogle(query.search)
       .then(res => {
-        console.log(res.data.items);
         setBooks(res.data.items);
       })
       .catch(err => console.log(err));
   }
 
+  // When the save button is clicked, use the API.saveBook to save a search result
+  // to the user's saved books database
+  function handleBookSave(id) {
+    const book = books.find(book => book.id === id);
+
+    API.saveBook({
+      title: book.volumeInfo.title,
+      authors: book.volumeInfo.authors,
+      description: book.volumeInfo.description,
+      image: book.volumeInfo.imageLinks.thumbnail,
+      link: book.volumeInfo.canonicalVolumeLink,
+    }).catch(err => console.log(err));
+  }
+
   return (
     <Container fluid>
       <Row>
-        <Col size="md-12">
+        <Col size="xl-12">
           <Jumbotron>
             <h1>(React) Google Books Search</h1>
             <h3>Search for and Save Books of Interest</h3>
@@ -49,8 +60,8 @@ function Books() {
         </Col>
       </Row>
       <Row>
-        <Col size="md-12">
-          <SearchResults books={books} />
+        <Col size="xl-12">
+          <SearchResults books={books} handleBookSave={handleBookSave} />
         </Col>
       </Row>
     </Container>

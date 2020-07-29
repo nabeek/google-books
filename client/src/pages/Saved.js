@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from "react";
-import ViewBtn from "../components/ViewBtn";
-import DeleteBtn from "../components/DeleteBtn";
 import Jumbotron from "../components/Jumbotron";
+import Book from "../components/Book";
 import API from "../utils/API";
-import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
-import { List, ListItem } from "../components/List";
-import { Input, TextArea, FormBtn } from "../components/Form";
 
 function Books() {
   // Setting our component's initial state
   const [books, setBooks] = useState([]);
-  const [formObject, setFormObject] = useState({});
 
   // Load all books and store them with setBooks
   useEffect(() => {
@@ -35,30 +30,36 @@ function Books() {
   return (
     <Container fluid>
       <Row>
-        <Col size="md-12">
+        <Col size="xl-12">
           <Jumbotron>
             <h1>(React) Google Books Search</h1>
             <h3>Search for and Save Books of Interest</h3>
           </Jumbotron>
-          {books.length ? (
-            <List>
-              {books.map(book => (
-                <ListItem key={book._id}>
-                  <Link to={"/books/" + book._id}>
-                    <strong>
-                      {book.title} by {book.author}
-                    </strong>
-                  </Link>
-                  <DeleteBtn onClick={() => deleteBook(book._id)} />
-                  <Link to={"/books/" + book._id}>
-                    <ViewBtn />
-                  </Link>
-                </ListItem>
-              ))}
-            </List>
-          ) : (
-            <h3>No Results to Display</h3>
-          )}
+
+          <Row>
+            <Col size="xl-12">
+              <React.Fragment>
+                {books.map(book => (
+                  <Book
+                    key={book._id}
+                    title={book.title}
+                    authors={book.authors}
+                    link={book.link}
+                    description={book.description}
+                    image={book.image}
+                    button={() => (
+                      <button
+                        onClick={() => deleteBook(book._id)}
+                        className="btn btn-danger text-white float-right"
+                      >
+                        Delete
+                      </button>
+                    )}
+                  />
+                ))}
+              </React.Fragment>
+            </Col>
+          </Row>
         </Col>
       </Row>
     </Container>
